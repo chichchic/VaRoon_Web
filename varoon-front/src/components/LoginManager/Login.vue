@@ -76,7 +76,7 @@ export default {
       curFocus: "id",
       openModal: false,
       useCase: [
-        { label: "환자", role: "ROLE_Patien" },
+        { label: "환자", role: "ROLE_Patient" },
         { label: "의사", role: "ROLE_Doctor" },
         { label: "판매자", role: "ROLE_Seller" },
         { label: "삭제된 계정", role: "", error: "deleted" },
