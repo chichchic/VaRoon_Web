@@ -2,49 +2,61 @@
   <div class="find-password">
     <h1 class="find-id-title">비밀번호 찾기</h1>
     <div>
-    <h2 class="id-title">아이디</h2>
-    <div class="id-input">
-      <input type="text" autofocus placeholder="사용하는 아이디를 입력하세요" />
-    </div>
-    </div>
-    <div>
-    <h2 class="pass-name-title">이름</h2>
-    <div class="pass-name-input">
-      <input type="text" autofocus placeholder="이름을 입력하세요" />
-    </div>
+      <h2 class="id-title">아이디</h2>
+      <div class="id-input">
+        <input
+          type="text"
+          autofocus
+          placeholder="사용하는 아이디를 입력하세요"
+        />
+      </div>
     </div>
     <div>
-    <h2 class="pass-email-title">이메일</h2>
-    <div class="pass-email-input">
-      <input type="text" placeholder="등록된 이메일과 같아야 인증번호가 발송됩니다" />
+      <h2 class="pass-name-title">이름</h2>
+      <div class="pass-name-input">
+        <input type="text" autofocus placeholder="이름을 입력하세요" />
+      </div>
     </div>
+    <div>
+      <h2 class="pass-email-title">이메일</h2>
+      <div class="pass-email-input">
+        <input
+          type="text"
+          placeholder="등록된 이메일과 같아야 인증번호가 발송됩니다"
+        />
+      </div>
     </div>
     <div class="pass-check-content">
-    <div class="pass-check-num">
-      <input type="text" placeholder="인증번호 4자리" />
+      <div class="pass-check-num">
+        <input type="text" placeholder="인증번호 4자리" />
+      </div>
+      <button class="pass-check-num-btn" @click="showImpossible">
+        인증번호 받기
+      </button>
     </div>
-    <button class="pass-check-num-btn">인증번호 받기</button>
-    </div>
-    <button class="pass-next-btn">다음</button>
-    <button class="pass-chanage-component" @click.prevent="CHANGE_FIND_COMPONENT('id')">아이디 찾기</button>
+    <button class="pass-next-btn" @click="showImpossible">다음</button>
+    <button
+      class="pass-chanage-component"
+      @click.prevent="CHANGE_FIND_COMPONENT('id')"
+    >
+      아이디 찾기
+    </button>
   </div>
 </template>
 <script>
-/*
-  TODO:
-
-    서버랑 연결해야함
-*/
 import { mapMutations } from "vuex";
 
 export default {
   methods: {
-    ...mapMutations(["CHANGE_FIND_COMPONENT"])
-  }
+    ...mapMutations(["CHANGE_FIND_COMPONENT"]),
+    showImpossible() {
+      alert("테스트 환경에서 사용할 수 없습니다.");
+    },
+  },
 };
 </script>
 <style>
-.find-password{
+.find-password {
   min-height: calc(100vh - 191px);
   padding: 5rem 0;
   display: flex;
@@ -116,7 +128,7 @@ export default {
   background-color: #ffffff;
 }
 
-.pass-check-content{
+.pass-check-content {
   display: flex;
 }
 

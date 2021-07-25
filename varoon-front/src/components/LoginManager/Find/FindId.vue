@@ -10,31 +10,39 @@
     <div>
       <h2 class="email-title">이메일</h2>
       <div class="email-input">
-        <input type="text" placeholder="등록된 이메일과 같아야 인증번호가 발송됩니다" />
+        <input
+          type="text"
+          placeholder="등록된 이메일과 같아야 인증번호가 발송됩니다"
+        />
       </div>
     </div>
     <div class="check-num-content">
       <div class="check-num">
         <input type="text" placeholder="인증번호 4자리" />
       </div>
-      <button class="check-num-btn">인증번호 받기</button>
+      <button class="check-num-btn" @click="showImpossible">
+        인증번호 받기
+      </button>
     </div>
-    <button class="next-btn">다음</button>
-    <button class="change-component" @click.prevent="CHANGE_FIND_COMPONENT('pass')">비밀번호 찾기</button>
+    <button class="next-btn" @click="showImpossible">다음</button>
+    <button
+      class="change-component"
+      @click.prevent="CHANGE_FIND_COMPONENT('pass')"
+    >
+      비밀번호 찾기
+    </button>
   </div>
 </template>
 <script>
-/*
-  TODO:
-
-    서버랑 연결해야함
-*/
 import { mapMutations } from "vuex";
 
 export default {
   methods: {
-    ...mapMutations(["CHANGE_FIND_COMPONENT"])
-  }
+    ...mapMutations(["CHANGE_FIND_COMPONENT"]),
+    showImpossible() {
+      alert("테스트 환경에서 사용할 수 없습니다.");
+    },
+  },
 };
 </script>
 <style>
