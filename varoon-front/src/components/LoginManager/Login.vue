@@ -1,11 +1,16 @@
 <template>
   <article class="login-artice">
-    <form @submit.prevent="onSubmit">
+    <form @submit.prevent="openModal = true">
       <div>
         <h1 class="login-text">로그인</h1>
         <h2 class="id-text">ID</h2>
         <div class="id-input" @click.prevent="setfocus('id')">
-          <input type="text" v-model="id" placeholder="6~13자 영문 소문자, 숫자 입력" ref="id" />
+          <input
+            type="text"
+            v-model="id"
+            placeholder="6~13자 영문 소문자, 숫자 입력"
+            ref="id"
+          />
         </div>
         <h2 class="pass-text">Password</h2>
         <div class="pass-input" @click.prevent="setfocus('pass')">
@@ -17,31 +22,66 @@
           />
         </div>
       </div>
-      <a href class="ling-find" @click.prevent="CHANGE_LOGIN_COMPONENT('findAccount')">아이디/비밀번호 찾기</a>
+      <a
+        href
+        class="ling-find"
+        @click.prevent="CHANGE_LOGIN_COMPONENT('findAccount')"
+        >아이디/비밀번호 찾기</a
+      >
       <div class="login-button-box">
         <button
           class="login-btn"
-          :class="{'can-login': !invalidForm}"
+          :class="{ 'can-login': !invalidForm }"
           type="submit"
           :disabled="invalidForm"
-        >로그인</button>
-        <button class="join-btn" @click.prevent="CHANGE_LOGIN_COMPONENT('terms')">회원가입</button>
+        >
+          로그인
+        </button>
+        <button
+          class="join-btn"
+          @click.prevent="CHANGE_LOGIN_COMPONENT('terms')"
+        >
+          회원가입
+        </button>
       </div>
     </form>
+    <Modal v-show="openModal" @modal-close="openModal = false">
+      <article class="login-role-select">
+        <button
+          class="role-btn"
+          v-for="{ label, role, error } in useCase"
+          :key="label"
+          @click="login(id, role, error)"
+        >
+          {{ label }}
+        </button>
+      </article>
+    </Modal>
   </article>
 </template>
 <script>
-import { auth, setAuthInHeader } from "@/api";
 import { mapMutations, mapActions } from "vuex";
+import Modal from "@/components/Modal.vue";
 
 export default {
+  components: {
+    Modal,
+  },
   data() {
     return {
       id: "",
       pw: "",
       error: "",
       rPath: "",
-      curFocus: "id"
+      curFocus: "id",
+      openModal: false,
+      useCase: [
+        { label: "환자", role: "ROLE_Patien" },
+        { label: "의사", role: "ROLE_Doctor" },
+        { label: "판매자", role: "ROLE_Seller" },
+        { label: "삭제된 계정", role: "", error: "deleted" },
+        { label: "존재하지 않는 계정", role: "", error: "nonexist" },
+      ],
     };
   },
   created() {
@@ -50,31 +90,43 @@ export default {
   watch: {
     error() {
       alert("삭제된 계정입니다. 이메일을 확인해주세요");
-    }
+    },
   },
   computed: {
     invalidForm() {
       return !this.id || !this.pw;
-    }
+    },
   },
   methods: {
-    ...mapActions(["LOGIN"]),
-    ...mapMutations(["CHANGE_LOGIN_COMPONENT"]),
+    ...mapMutations(["LOGIN", "CHANGE_LOGIN_COMPONENT"]),
 
     onSubmit() {
       this.LOGIN({ id: this.id, pw: this.pw })
-        .then(data => {
+        .then((data) => {
           this.$router.push(this.rPath);
         })
-        .catch(err => {
+        .catch((err) => {
           this.error = err.data.error;
         });
     },
     setfocus(data) {
       if (data === "id") this.$refs.id.focus();
       else this.$refs.pass.focus();
-    }
-  }
+    },
+    login(id, role, error) {
+      if (error === "nonexist") {
+        alert("존재하지 않는 계정입니다.");
+        return;
+      }
+      if (error === "deleted") {
+        alert("삭제된 계정입니다. 이메일을 확인해주세요");
+        return;
+      }
+      this.LOGIN({ token: "1", name: "테스트", role, id });
+      this.openModal = false;
+      this.$router.push(this.rPath);
+    },
+  },
 };
 </script>
 <style>
@@ -187,5 +239,29 @@ export default {
   outline: none;
   cursor: pointer;
   color: #4b74ff;
+}
+
+.login-role-select {
+  display: flex;
+  height: calc(100% - 126px);
+  align-items: center;
+  justify-content: center;
+}
+.role-btn {
+  width: 116px;
+  height: 64px;
+  border: solid 1px #4b74ff;
+  background-color: #ffffff;
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+  color: #4b74ff;
+}
+.role-btn:hover {
+  background-color: #4b74ff;
+  color: white;
+}
+.role-btn:not(:last-child) {
+  margin-right: 10px;
 }
 </style>
