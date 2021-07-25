@@ -256,24 +256,27 @@ export default {
     ...mapMutations(["CHANGE_LOGIN_COMPONENT"]),
     ...mapActions(["CHECK_DUPLICATE", "REGIST_FUNC"]),
     checkDuplicate() {
-      this.CHECK_DUPLICATE(this.id).then((data) => {
-        if (data.result === false) this.checkId = true;
-        else this.checkId = false;
-      });
+      const randomNum = Math.floor(Math.random() * 2);
+      this.checkId = randomNum === 0;
+      // this.CHECK_DUPLICATE(this.id).then((data) => {
+      //   if (data.result === false) this.checkId = true;
+      //   else this.checkId = false;
+      // });
     },
     regist() {
-      this.REGIST_FUNC({
-        birth: this.year + "." + this.month + "." + this.date,
-        email: this.email,
-        gender: this.gender,
-        id: this.id,
-        name: this.name,
-        pw: this.pw,
-        role: this.role,
-      }).then((data) => {
-        if (data.result === false) alert("회원가입 실패");
-        else if (data.result === true) this.CHANGE_LOGIN_COMPONENT("welcome");
-      });
+      this.CHANGE_LOGIN_COMPONENT("welcome");
+      // this.REGIST_FUNC({
+      //   birth: this.year + "." + this.month + "." + this.date,
+      //   email: this.email,
+      //   gender: this.gender,
+      //   id: this.id,
+      //   name: this.name,
+      //   pw: this.pw,
+      //   role: this.role,
+      // }).then((data) => {
+      //   if (data.result === false) alert("회원가입 실패");
+      //   else if (data.result === true) this.CHANGE_LOGIN_COMPONENT("welcome");
+      // });
     },
     selectSex(input) {
       this.gender = input;
