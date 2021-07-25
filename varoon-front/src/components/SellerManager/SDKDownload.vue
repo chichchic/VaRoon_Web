@@ -3,14 +3,16 @@
     <h1 class="down-title">SDK 다운로드</h1>
     <div class="sdk-down-box">
       <h3 class="sdk-box-tag">VaRoon SDK 1.1</h3>
-      <button class="sdk-box-btn">Download</button>
+      <button class="sdk-box-btn" @click="showImpossible">Download</button>
     </div>
   </div>
 </template>
 <script>
 export default {
-  data() {
-    return {};
+  methods: {
+    showImpossible() {
+      alert("테스트 환경에서 사용할 수 없습니다.");
+    },
   },
 };
 </script>

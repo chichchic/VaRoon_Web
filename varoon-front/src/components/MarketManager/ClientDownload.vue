@@ -3,12 +3,13 @@
     <h1 class="client-title">클라이언트 다운로드</h1>
     <div class="client-down-box">
       <div class="client-down-tag">VaRoon Client 1.1</div>
-      <button class="client-down-button">Download</button>
+      <button class="client-down-button" @click="showImpossible">
+        Download
+      </button>
     </div>
   </div>
 </template>
 <script>
-import AWS from "aws-sdk";
 export default {
   data() {
     return {
@@ -17,17 +18,8 @@ export default {
     };
   },
   methods: {
-    fileDown() {
-      const s3 = new AWS.s3();
-      AWS.config.update({ accessKeyId: "", secretAccessKey: "" });
-      const myBucket = "varoon";
-      const myKey = "";
-      const signedUrlExpireSeconds = 60 * 5; // your expiry time in seconds.
-      const url = s3.getSignedUrl("getObject", {
-        Bucket: myBucket,
-        Key: myKey,
-        Expires: signedUrlExpireSeconds,
-      });
+    showImpossible() {
+      alert("테스트 환경에서 사용할 수 없습니다.");
     },
   },
 };
