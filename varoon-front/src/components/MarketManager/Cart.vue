@@ -1,123 +1,59 @@
 <template>
   <div class="cart-content">
     <h1 class="cart-title">장바구니</h1>
-    <p class="cart-delete-des">선택삭제</p>
     <div>
+      <p v-if="gameList.length === 0">EMPTY</p>
       <ul class="cart-list">
-        <li>
-          <div class="cart-checkbox" @click.prevent="first = !first">
+        <li
+          v-for="({ checked, img, title, ageLimit, price }, index) in gameList"
+          :key="index"
+        >
+          <div
+            class="cart-checkbox"
+            @click.prevent="gameList[index].checked = !gameList[index].checked"
+          >
             <img
               class="cart-checkbox-img"
               src="@/images/checkbox-checked-img@2x.png"
-              v-if="first"
+              v-if="checked"
             />
             <div class="cart-checkbox-no-img" v-else></div>
           </div>
           <img
             class="liimg"
-            src="@/images/50.jpg"
-            @click.prevent="CHANGE_MARKET_COMPONENT('game')"
-          />
-          <div class="cart-des-box">
-            <h3 class="cart-box-title">Monster Hunt World 3</h3>
-            <p class="cart-box-descript">{{ descript[0] }}</p>
-          </div>
-          <div class="cart-end-box">
-            <div class="cart-delete-button">&times;</div>
-            <p class="cart-item-age-limit">15세 이상 가능</p>
-            <p class="cart-item-price">43,000 원</p>
-          </div>
-        </li>
-        <li>
-          <div class="cart-checkbox" @click.prevent="second = !second">
-            <img
-              class="cart-checkbox-img"
-              src="@/images/checkbox-checked-img@2x.png"
-              v-if="second"
-            />
-            <div class="cart-checkbox-no-img" v-else></div>
-          </div>
-          <img
-            class="liimg"
-            src="@/images/51.jpg"
+            :src="img"
             @click.prevent="CHANGE_MARKET_COMPONENT('game')"
           />
 
           <div class="cart-des-box">
-            <h3 class="cart-box-title">Monster Hunt World 3</h3>
+            <h3 class="cart-box-title">{{ title }}</h3>
             <p class="cart-box-descript">{{ descript[0] }}</p>
           </div>
           <div class="cart-end-box">
-            <div class="cart-delete-button">&times;</div>
-            <p class="cart-item-age-limit">15세 이상 가능</p>
-            <p class="cart-item-price">21,000 원</p>
-          </div>
-        </li>
-        <li>
-          <div class="cart-checkbox" @click.prevent="third = !third">
-            <img
-              class="cart-checkbox-img"
-              src="@/images/checkbox-checked-img@2x.png"
-              v-if="third"
-            />
-            <div class="cart-checkbox-no-img" v-else></div>
-          </div>
-          <img
-            class="liimg"
-            src="@/images/52.jpg"
-            @click.prevent="CHANGE_MARKET_COMPONENT('game')"
-          />
-
-          <div class="cart-des-box">
-            <h3 class="cart-box-title">Monster Hunt World 3</h3>
-            <p class="cart-box-descript">{{ descript[0] }}</p>
-          </div>
-          <div class="cart-end-box">
-            <div class="cart-delete-button">&times;</div>
-            <p class="cart-item-age-limit">15세 이상 가능</p>
-            <p class="cart-item-price">36,000 원</p>
-          </div>
-        </li>
-        <li>
-          <div class="cart-checkbox" @click.prevent="fourth = !fourth">
-            <img
-              class="cart-checkbox-img"
-              src="@/images/checkbox-checked-img@2x.png"
-              v-if="fourth"
-            />
-            <div class="cart-checkbox-no-img" v-else></div>
-          </div>
-          <img
-            class="liimg"
-            src="@/images/53.jpg"
-            @click.prevent="CHANGE_MARKET_COMPONENT('game')"
-          />
-
-          <div class="cart-des-box">
-            <h3 class="cart-box-title">Monster Hunt World 3</h3>
-            <p class="cart-box-descript">{{ descript[0] }}</p>
-          </div>
-          <div class="cart-end-box">
-            <div class="cart-delete-button">&times;</div>
-            <p class="cart-item-age-limit">15세 이상 가능</p>
-            <p class="cart-item-price">13,000 원</p>
+            <div class="cart-delete-button" @click="gameList.splice(index, 1)">
+              &times;
+            </div>
+            <p class="cart-item-age-limit">{{ ageLimit }}</p>
+            <p class="cart-item-price">{{ price }}</p>
           </div>
         </li>
       </ul>
-      <div class="cart-total">
+      <div class="cart-total" v-if="gameList.length !== 0">
         <p class="cart-total-count">
           총
-          <span class="cartblue">1개</span>의 상품 선택
+          <span class="cartblue"
+            >{{ gameList.filter(({ checked }) => checked).length }}개</span
+          >의 상품 선택
         </p>
         <p class="total-price">
           <span class="total-price-tag">총 금액</span>
-          <span class="total-price-cost">11,3000원</span>
+          <span class="total-price-cost">{{ totalAmount }}원</span>
         </p>
         <div class="total-price-num"></div>
       </div>
-      <div class="cart-last">
+      <div class="cart-last" v-if="gameList.length !== 0">
         <h2 class="cart-last-tag">결제하기</h2>
-        <div class="cart-last-img">
+        <div class="cart-last-img" @click="showImpossible">
           <img src="@/images/kakaopay-btn@2x.png" />
         </div>
       </div>
@@ -131,15 +67,50 @@ export default {
   data() {
     return {
       descript: [`제목 : Witcher 3 분류 : 액션, 사시 가격 : 43,000 원`],
-      totalAmount: 0,
-      first: false,
-      second: false,
-      third: false,
-      fourth: false,
+      gameList: [
+        {
+          checked: false,
+          img: require("@/images/50.jpg"),
+          title: "Monster Hunt World 3",
+          ageLimit: "15세 이상 가능",
+          price: "43000",
+        },
+        {
+          checked: false,
+          img: require("@/images/51.jpg"),
+          title: "Monster Hunt World 3",
+          ageLimit: "15세 이상 가능",
+          price: "21000",
+        },
+        {
+          checked: false,
+          img: require("@/images/52.jpg"),
+          title: "Monster Hunt World 3",
+          ageLimit: "15세 이상 가능",
+          price: "36000",
+        },
+        {
+          checked: false,
+          img: require("@/images/53.jpg"),
+          title: "Monster Hunt World 3",
+          ageLimit: "15세 이상 가능",
+          price: "13000",
+        },
+      ],
     };
+  },
+  computed: {
+    totalAmount() {
+      return this.gameList
+        .filter(({ checked }) => checked)
+        .reduce((acc, { price }) => acc + parseInt(price), 0);
+    },
   },
   methods: {
     ...mapMutations(["CHANGE_MARKET_COMPONENT"]),
+    showImpossible() {
+      alert("테스트 환경에서 사용할 수 없습니다.");
+    },
   },
 };
 </script>
