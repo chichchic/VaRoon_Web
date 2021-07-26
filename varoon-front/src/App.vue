@@ -1,9 +1,5 @@
 <template>
   <div id="app">
-    <span class="fontDown1">가</span>
-    <span class="fontDown2">가</span>
-    <span class="fontDown3">가</span>
-    <span class="fontDown4">가</span>
     <TopNavi />
     <router-view class="container"></router-view>
     <Footer />
@@ -18,11 +14,11 @@ export default {
   name: "app",
   components: {
     Footer,
-    TopNavi
+    TopNavi,
   },
   data() {
     return {};
-  }
+  },
 };
 </script>
 <style>
@@ -31,61 +27,20 @@ export default {
   padding: 0px;
   box-sizing: border-box;
 }
-@font-face {
-  font-family: "NanumBarunGothicOTF";
-  src: url("https://varoon.s3.ap-northeast-2.amazonaws.com/Fonts/NanumBarunGothic.woff2")
-      format("woff2"),
-    url("https://varoon.s3.ap-northeast-2.amazonaws.com/Fonts/NanumBarunGothic.woff")
-      format("woff"),
-    url("https://varoon.s3.ap-northeast-2.amazonaws.com/Fonts/NanumBarunGothic.ttf")
-      format("truetype");
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "NanumBarunGothicUltraLightOTF";
-  src: url("https://varoon.s3.ap-northeast-2.amazonaws.com/Fonts/NanumBarunGothicUltraLight.woff2")
-      format("woff2"),
-    url("https://varoon.s3.ap-northeast-2.amazonaws.com/Fonts/NanumBarunGothicUltraLight.woff")
-      format("woff"),
-    url("https://varoon.s3.ap-northeast-2.amazonaws.com/Fonts/NanumBarunGothicUltraLight.ttf")
-      format("truetype");
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "NanumBarunGothicLightOTF";
-  src: url("https://varoon.s3.ap-northeast-2.amazonaws.com/Fonts/NanumBarunGothicLight.woff2")
-      format("woff2"),
-    url("https://varoon.s3.ap-northeast-2.amazonaws.com/Fonts/NanumBarunGothicLight.woff")
-      format("woff"),
-    url("https://varoon.s3.ap-northeast-2.amazonaws.com/Fonts/NanumBarunGothicLight.ttf")
-      format("truetype");
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "NanumBarunGothicBoldOTF";
-  src: url("https://varoon.s3.ap-northeast-2.amazonaws.com/Fonts/NanumBarunGothicBold.woff2")
-      format("woff2"),
-    url("https://varoon.s3.ap-northeast-2.amazonaws.com/Fonts/NanumBarunGothicBold.woff")
-      format("woff"),
-    url("https://varoon.s3.ap-northeast-2.amazonaws.com/Fonts/NanumBarunGothicBold.ttf")
-      format("truetype");
-  font-style: normal;
-}
 body,
 #app {
   width: 100%;
   margin: 0px;
 }
-ul, li, ol {
+ul,
+li,
+ol {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 ::-webkit-scrollbar {
-      display: none;
+  display: none;
 }
 .container {
   position: relative;
