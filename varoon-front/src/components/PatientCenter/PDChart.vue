@@ -1,20 +1,6 @@
 <template>
   <article class="pd-chart">
     <header class="pd-chart-header">
-      <div class="pd-legend">
-        <div
-          v-for="(item, index) in endIndex - startIndex + 1"
-          :key="index"
-          class="cirecle-box"
-        >
-          <div
-            :class="pdCircle_idx(index + 1, endIndex - startIndex + 1)"
-          ></div>
-          <p class="circle-text">
-            {{ recentDatesSlice[startIndex + index - 1] }}
-          </p>
-        </div>
-      </div>
       <div class="text">
         <p class="category">최근 검사일 {{ recentDate }}</p>
         <p class="category">
@@ -108,14 +94,8 @@ export default {
       endDay: "",
       startIndex: 0,
       endIndex: 0,
-      series1: [
-        ["id", "horizontal", "vartical", "color"],
-        ["1", 0, 0, 0],
-      ],
-      series2: [
-        ["id", "horizontal", "vartical", "color"],
-        ["2", 0, 0, 0],
-      ],
+      series1: [["id", "horizontal", "vertical", "color"]],
+      series2: [["id", "horizontal", "vertical", "color"]],
       chartOptions1: {
         legend: "none",
         width: 580,
@@ -161,7 +141,7 @@ export default {
   methods: {
     ...mapActions(["PD_CHART"]),
     chartDataUpdate() {
-      const nameTag = ["checkupDay", "horizontal", "vartical", "dataNum"];
+      const nameTag = ["checkupDay", "horizontal", "vertical", "dataNum"];
       this.series1 = this.leftPDs
         .slice(this.startIndex - 1, this.endIndex)
         .map((data, index) => [
@@ -190,29 +170,68 @@ export default {
     },
   },
   created() {
-    this.PD_CHART().then((data) => {
-      this.rangeDataArr = data;
-      console.log(data);
-      this.recentDates = Array.from(data, (data) => data.date);
-      this.leftPDs = Array.from(
-        Array.from(data, (data) => data.leftPD),
-        (data) => [data.horizontal, data.vertical]
-      );
-      this.recentDatesSlice = Array.from(this.recentDates, (data) =>
-        data.slice(5)
-      );
-      this.rightPDs = Array.from(
-        Array.from(data, (data) => data.rightPD),
-        (data) => [data.horizontal, data.vertical]
-      );
-      this.startIndex = this.recentDates.length - 5;
-      this.endIndex = this.recentDates.length - 1;
-      this.startDay = this.recentDates[this.startIndex];
-      this.endDay = this.recentDates[this.endIndex];
-      this.angleL = this.leftPDs[this.endIndex];
-      this.angleR = this.rightPDs[this.endIndex];
-      this.recentDate = this.recentDates[this.endIndex];
-    });
+    const data = [
+      {
+        date: "2021/07/26",
+        leftPD: { horizontal: 9, vertical: -12 },
+        rightPD: { horizontal: -5, vertical: 8 },
+      },
+      {
+        date: "2021/07/27",
+        leftPD: { horizontal: 3, vertical: -3 },
+        rightPD: { horizontal: -2, vertical: 6 },
+      },
+      {
+        date: "2021/07/28",
+        leftPD: { horizontal: 3, vertical: 12 },
+        rightPD: { horizontal: -6, vertical: 3 },
+      },
+      {
+        date: "2021/07/29",
+        leftPD: { horizontal: 3, vertical: 4 },
+        rightPD: { horizontal: -2, vertical: -8 },
+      },
+      {
+        date: "2021/07/30",
+        leftPD: { horizontal: 13, vertical: 7 },
+        rightPD: { horizontal: -11, vertical: 8 },
+      },
+      {
+        date: "2021/07/31",
+        leftPD: { horizontal: 3, vertical: 17 },
+        rightPD: { horizontal: -16, vertical: 8 },
+      },
+      {
+        date: "2021/08/01",
+        leftPD: { horizontal: -15, vertical: 7 },
+        rightPD: { horizontal: -1, vertical: 18 },
+      },
+      {
+        date: "2021/08/02",
+        leftPD: { horizontal: 13, vertical: 17 },
+        rightPD: { horizontal: -1, vertical: 8 },
+      },
+    ];
+    this.rangeDataArr = data;
+    this.recentDates = Array.from(data, (data) => data.date);
+    this.leftPDs = Array.from(
+      Array.from(data, (data) => data.leftPD),
+      (data) => [data.horizontal, data.vertical]
+    );
+    this.recentDatesSlice = Array.from(this.recentDates, (date) =>
+      date.slice(5)
+    );
+    this.rightPDs = Array.from(
+      Array.from(data, (data) => data.rightPD),
+      (data) => [data.horizontal, data.vertical]
+    );
+    this.startIndex = this.recentDates.length - 5;
+    this.endIndex = this.recentDates.length - 1;
+    this.startDay = this.recentDates[this.startIndex];
+    this.endDay = this.recentDates[this.endIndex];
+    this.angleL = this.leftPDs[this.endIndex];
+    this.angleR = this.rightPDs[this.endIndex];
+    this.recentDate = this.recentDates[this.endIndex];
   },
 };
 </script>
