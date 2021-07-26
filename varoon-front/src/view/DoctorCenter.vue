@@ -32,13 +32,12 @@
             <td>{{ i.gender.slice(0, 1) }}</td>
           </tr>
         </table>
-        <button
-          class="patient-list-button"
-          @click.prevent="patientRegist = !patientRegist"
-        >
+        <button class="patient-list-button" @click="showImpossible">
           추가
         </button>
-        <button class="patient-list-button">삭제</button>
+        <button class="patient-list-button" @click="showImpossible">
+          삭제
+        </button>
       </div>
       <div class="patient-info-box">
         <h3 class="patient-info-text-title">환자 정보</h3>
@@ -67,7 +66,7 @@
             <span>기타 사항</span>
             <textarea v-model="etc"></textarea>
           </p>
-          <div class="info-box-button" @click="patientDataUpdate()">저장</div>
+          <div class="info-box-button" @click="showImpossible">저장</div>
         </div>
       </div>
     </article>

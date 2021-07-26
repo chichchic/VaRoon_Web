@@ -22,7 +22,9 @@
         <td class="upload-date">{{ uploadList[index][1] }}</td>
         <td class="upload-result">{{ uploadList[index][2] }}</td>
         <td class="upload-size">{{ uploadList[index][3] }}</td>
-        <td class="upload-down">{{ uploadList[index][4] }}</td>
+        <td class="upload-down" @click="showImpossible">
+          {{ uploadList[index][4] }}
+        </td>
       </tr>
     </table>
     <div class="uploadlist-number">
@@ -35,8 +37,12 @@
       >
     </div>
     <div class="upload-btn-box">
-      <button class="upload-change-btn">변환 희망 파일 업로드</button>
-      <button class="upload-btn">SDK로 개발된 파일 업로드</button>
+      <button class="upload-change-btn" @click="showImpossible">
+        변환 희망 파일 업로드
+      </button>
+      <button class="upload-btn" @click="showImpossible">
+        SDK로 개발된 파일 업로드
+      </button>
     </div>
   </div>
 </template>
@@ -102,6 +108,10 @@ export default {
     },
     chgLiNo(idx) {
       this.listNo = idx;
+    },
+
+    showImpossible() {
+      alert("테스트 환경에서 사용할 수 없습니다.");
     },
   },
 };
@@ -180,6 +190,8 @@ export default {
   text-align: center;
   color: #000000;
   line-height: 50px;
+}
+td.upload-down {
   text-decoration: underline;
   cursor: pointer;
 }

@@ -9,7 +9,7 @@
         placeholder="비밀번호를 입력해주세요"
       />
     </p>
-    <button class="mypage-check-button" @click="checkPass">확인</button>
+    <button class="mypage-check-button" @click="showImpossible">확인</button>
   </div>
 </template>
 <script>
@@ -26,16 +26,8 @@ export default {
   methods: {
     ...mapActions(["LOGIN"]),
     ...mapMutations(["CHANGE_MY_COMPONENT"]),
-    checkPass() {
-      const id = this.id;
-      const pw = this.inputPassword;
-      this.LOGIN({ id, pw })
-        .then((_) => {
-          this.CHANGE_MY_COMPONENT("pa");
-        })
-        .catch((_) => {
-          alert("worng password");
-        });
+    showImpossible() {
+      alert("테스트 환경에서 사용할 수 없습니다.");
     },
   },
 };
