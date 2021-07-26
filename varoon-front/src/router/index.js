@@ -16,7 +16,7 @@ import store from '../store'
 Vue.use(VueRouter);
 
 const requireAuth = (to, from, next) => {
-    const loginPath = `/login?rPath=${encodeURIComponent(to.path)}`; //이전 페이지가 어딘지 기억
+    const loginPath = `/loginManager?rPath=${encodeURIComponent(to.path)}`; //이전 페이지가 어딘지 기억
     store.getters.isAuth ? next() : next(loginPath);
 };
 
@@ -25,7 +25,7 @@ const mainHome = (to, from, next) => {
 }
 
 const router = new VueRouter({
-    mode: "history",
+    mode: "hash",
     base: '/VaRoon_Web/',
     routes: [{
             path: "/main",
@@ -43,18 +43,22 @@ const router = new VueRouter({
         {
             path: "/MarketManager",
             component: MarketManager
+            ,beforeEnter: requireAuth
         },
         {
             path: "/SellerManager",
             component: SellerManager
+            ,beforeEnter: requireAuth
         },
         {
             path: "/PatientCenter",
             component: PatientCenter
+            ,beforeEnter: requireAuth
         },
         {
             path: "/DoctorCenter",
             component: DoctorCenter
+            ,beforeEnter: requireAuth
         },
         {
             path: "/Manager",
@@ -63,6 +67,7 @@ const router = new VueRouter({
         {
             path: "/MypageManager",
             component: MypageManager
+            ,beforeEnter: requireAuth
         },
         {
             path: "*",
