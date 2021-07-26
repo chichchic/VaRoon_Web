@@ -102,9 +102,8 @@ export default {
 }
 
 .pageimg {
-  margin-top: 23px;
-  width: 454px;
-  height: 637.1px;
+  margin: 23px 10%;
+  width: 80%;
   opacity: 0.48;
   border-radius: 3px;
   background-color: #ffffff;
@@ -113,11 +112,11 @@ export default {
   position: relative;
 }
 .pageimg-anchor::after {
-  width: 454px;
-  height: 637.1px;
+  width: 80%;
+  height: calc(100% - 46px);
   position: absolute;
-  right: 0;
-  bottom: 0;
+  right: 10%;
+  bottom: 23px;
   content: "";
   background: rgba(75, 116, 255, 0.25);
   z-index: 3;
@@ -126,9 +125,5 @@ export default {
 }
 .pageimg-anchor:hover::after {
   opacity: 1;
-}
-
-.pageimg#second {
-  margin-left: 42.2px;
 }
 </style>
