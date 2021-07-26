@@ -2,7 +2,9 @@
   <section class="doctor-center">
     <header class="doctor-center-header">
       <h1 class="center-title">환자 관리하기</h1>
-      <button class="doctor-client-download">클라이언트 다운로드</button>
+      <button class="doctor-client-download" @click="showImpossible">
+        클라이언트 다운로드
+      </button>
     </header>
     <article class="doctor-center-content">
       <div class="patient-list-box">
@@ -10,28 +12,26 @@
           <input type="text" v-model="search" placeholder="검색" />
         </div>
         <div class="patient-list-text">검색 결과</div>
-        <ul>
-          <li
-            :class="{
-              nomalList: selectIndex !== index,
-              selectedList: selectIndex === index,
-            }"
+        <table class="patient-list">
+          <tr>
+            <th>인덱스</th>
+            <th>이름</th>
+            <th>나이</th>
+            <th>성별</th>
+          </tr>
+          <tr
+            class="patient-list-line"
             v-for="(i, index) in chargePatient"
+            :class="{ selected: index === selectIndex }"
             :key="index"
             @click.prevent="selectList(index)"
           >
-            <div :class="{ index: false, lastIndex: true }">
-              {{ index + 1 }}
-            </div>
-            <div :class="{ name: false, lastName: true }">{{ i.name }}</div>
-            <div :class="{ sex: false, lastSex: true }">
-              {{ i.gender.slice(0, 1) }}
-            </div>
-            <div :class="{ age: false, lastAge: true }">
-              {{ 2019 - Number(i.age.slice(0, 4)) - 1 }}
-            </div>
-          </li>
-        </ul>
+            <td>{{ index + 1 }}</td>
+            <td>{{ i.name }}</td>
+            <td>{{ i.age }}</td>
+            <td>{{ i.gender.slice(0, 1) }}</td>
+          </tr>
+        </table>
         <button
           class="patient-list-button"
           @click.prevent="patientRegist = !patientRegist"
@@ -69,23 +69,8 @@
           </p>
           <div class="info-box-button" @click="patientDataUpdate()">저장</div>
         </div>
-        <div class="doc-controller">
-          <button @click="chartNoMin" class="doc-lt">&lt;</button>
-          <button @click="chartNoPlus" class="doc-rt">&gt;</button>
-        </div>
-        <div class="doctorpatient-chart">
-          <doctor-p-d-chart v-if="chartNo === 1" />
-          <doctor-range-chart v-else-if="chartNo === 2" />
-          <doctor-focus-chart v-else-if="chartNo === 3" />
-          <doctor-training-chart v-else-if="chartNo === 4" />
-        </div>
       </div>
     </article>
-    <PatientRegister
-      @modal-close="patientRegist = false"
-      v-if="patientRegist"
-      @regist="RegistFunc"
-    />
   </section>
 </template>
 <script>
@@ -94,7 +79,7 @@ import DoctorPDChart from "@/components/DoctorCenter/DoctorPDChart.vue";
 import DoctorRangeChart from "@/components/DoctorCenter/DoctorRangeChart.vue";
 import DoctorFocusChart from "@/components/DoctorCenter/DoctorFocusChart.vue";
 import DoctorTrainingChart from "@/components/DoctorCenter/DoctorTrainingChart.vue";
-import { mapActions, mapMutations, mapState } from "vuex";
+import { mapMutations, mapState } from "vuex";
 
 export default {
   components: {
@@ -108,23 +93,26 @@ export default {
     ...mapState(["DocPrescription"]),
   },
   watch: {
-    id() {
-      this.PATIENT_CHART(this.name).then((data) => {
-        this.name = data.name;
-        this.age = data.age;
-        this.sex = data.gender;
-        this.etc = data.desc;
-        this.CHANGE_PRESCRIPTION(data.prescription);
-        this.angle = `L:${data.leftPD.horizontal},${data.leftPD.vertical} R:${data.rightPD.horizontal},${data.rightPD.vertical}`;
-        this.CHANGE_DOCLIST(data.pdlist);
-        this.CHANGE_DOCRANGE(data.rangesList);
-        this.CHANGE_DOCPLAY(data.playLogs);
-        this.chartNo = 1;
-      });
+    id(newVal) {
+      const data = this.chargePatient[newVal];
+      if (data === undefined) {
+        this.name = "";
+        this.age = "";
+        this.sex = "";
+        this.etc = "";
+        this.angle = "";
+      }
+      this.name = data.name;
+      this.age = data.age;
+      this.sex = data.gender;
+      this.etc = data.desc;
+      this.angle = `L:${data.leftPD.horizontal},${data.leftPD.vertical} R:${data.rightPD.horizontal},${data.rightPD.vertical}`;
+      this.chartNo = 1;
     },
     search() {
       if (this.search === "") {
         this.selectIndex = -1;
+        this.id = -1;
         return;
       }
       let i = -1;
@@ -141,9 +129,72 @@ export default {
     },
   },
   created() {
-    this.PATIENT_REFER().then((data) => {
-      this.chargePatient = data;
-    });
+    const data = [
+      {
+        id: 0,
+        name: "test1",
+        age: "7",
+        gender: "male",
+        leftPD: { horizontal: 3, vertical: 1 },
+        rightPD: { horizontal: 2, vertical: 1 },
+        desc: "양안 중간정도의 사시",
+      },
+      {
+        id: 1,
+        name: "test2",
+        age: "7",
+        gender: "female",
+        leftPD: { horizontal: -1, vertical: 0 },
+        rightPD: { horizontal: 2, vertical: 3 },
+        desc: "초기 상태에 비해 많은 호전상태를 보이는 중",
+      },
+      {
+        id: 2,
+        name: "test3",
+        age: "6",
+        gender: "male",
+        leftPD: { horizontal: 1, vertical: 4 },
+        rightPD: { horizontal: 2, vertical: 4 },
+        desc: "수직 방향으로 존재하는 사시",
+      },
+      {
+        id: 3,
+        name: "test4",
+        age: "6",
+        gender: "female",
+        leftPD: { horizontal: 0, vertical: 1 },
+        rightPD: { horizontal: 0, vertical: 0 },
+        desc: "재발 방지를 위한 훈련만 진행하면 될것으로 보임",
+      },
+      {
+        id: 4,
+        name: "test5",
+        age: "5",
+        gender: "female",
+        leftPD: { horizontal: 9, vertical: 7 },
+        rightPD: { horizontal: 2, vertical: 4 },
+        desc: "심한 사시로 수술이 필요해보임",
+      },
+      {
+        id: 5,
+        name: "test6",
+        age: "8",
+        gender: "female",
+        leftPD: { horizontal: 1, vertical: 0 },
+        rightPD: { horizontal: 2, vertical: 2 },
+        desc: "약한 사시로 훈련만으로 충분히 치료가 가능함",
+      },
+      {
+        id: 6,
+        name: "test7",
+        age: "9",
+        gender: "male",
+        leftPD: { horizontal: 2, vertical: 2 },
+        rightPD: { horizontal: 1, vertical: 3 },
+        desc: "늦은 시기에 사시를 발견해 수술을 해야할 수 있음",
+      },
+    ];
+    this.chargePatient = data;
   },
   data() {
     return {
@@ -164,12 +215,6 @@ export default {
     };
   },
   methods: {
-    ...mapActions([
-      "PATIENT_REFER",
-      "PATIENT_REGIST",
-      "PATIENT_CHART",
-      "PATIENT_CHARTUPDATE",
-    ]),
     ...mapMutations([
       "CHANGE_PRESCRIPTION",
       "CHANGE_DOCLIST",
@@ -177,11 +222,6 @@ export default {
       "CHANGE_DOCPLAY",
     ]),
     RegistFunc(id) {
-      this.PATIENT_REGIST(id).then((_) => {
-        this.PATIENT_REFER().then((data) => {
-          this.chargePatient = data;
-        });
-      });
       this.patientRegist = !this.patientRegist;
     },
     selectList(index) {
@@ -211,6 +251,9 @@ export default {
         prescription: data,
       };
       this.PATIENT_CHARTUPDATE(input);
+    },
+    showImpossible() {
+      alert("테스트 환경에서 사용할 수 없습니다.");
     },
   },
 };
@@ -250,6 +293,29 @@ export default {
 }
 .doctor-center-content {
   display: flex;
+}
+.patient-list {
+  margin: 20px 0;
+  border-collapse: collapse;
+  border: 1px solid rgb(33, 33, 33);
+}
+.patient-list tr,
+.patient-list th,
+.patient-list td {
+  border-collapse: collapse;
+  border: 1px solid rgb(33, 33, 33);
+  text-align: center;
+}
+.patient-list th,
+.patient-list td {
+  padding: 5px;
+}
+.patient-list-line:hover {
+  background-color: rgba(75, 116, 255, 0.24);
+  cursor: pointer;
+}
+.patient-list-line.selected {
+  background-color: rgba(75, 116, 255, 0.24);
 }
 .patient-list-box {
   width: 274px;
@@ -317,17 +383,6 @@ export default {
   height: 35px;
   width: 232.5px;
   list-style: none;
-}
-
-.patient-list-box .nomalList:hover {
-  background-color: rgba(75, 116, 255, 0.24);
-}
-
-.patient-list-box .selectedList {
-  height: 35px;
-  width: 232.5px;
-  list-style: none;
-  background-color: rgba(75, 116, 255, 0.24);
 }
 
 .patient-list-box li .index {
@@ -437,8 +492,7 @@ export default {
 }
 
 .patient-info-text {
-  padding: 40px 52px;
-  border-bottom: solid 0.5px #e2e2e2;
+  padding: 40px 52px 0 52px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   row-gap: 10px;
