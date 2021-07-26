@@ -125,18 +125,83 @@ export default {
     },
   },
   created() {
-    this.FOCOUS_CHART().then((data) => {
-      console.log(data);
-      this.recentDates = Array.from(data.playLogList, (data) => data.date);
-      this.gameDatas = Array.from(data.playLogList, (data) => data.curGame);
-      this.blurDatas = Array.from(data.playLogList, (data) => data.blur);
-      this.pdDatas = Array.from(data.playLogList, (data) => data.pd);
-      this.focusDatas = Array.from(data.playLogList, (data) => data.focus);
-      this.startIndex = 0;
-      this.endIndex = this.recentDates.length - 1;
-      this.startDay = this.recentDates[this.startIndex];
-      this.endDay = this.recentDates[this.endIndex];
-    });
+    const data = {
+      playLogList: [
+        {
+          date: "21/07/26",
+          curGame: "test game name",
+          blur: 4,
+          pd: { horizontal: 3, vertical: 1 },
+          focus: 2,
+        },
+        {
+          date: "21/07/27",
+          curGame: "test game name",
+          blur: 4,
+          pd: { horizontal: 3, vertical: 1 },
+          focus: 4,
+        },
+        {
+          date: "21/07/28",
+          curGame: "test game name",
+          blur: 4,
+          pd: { horizontal: 3, vertical: 1 },
+          focus: 12,
+        },
+        {
+          date: "21/07/29",
+          curGame: "test game name",
+          blur: 4,
+          pd: { horizontal: 3, vertical: 1 },
+          focus: 11,
+        },
+        {
+          date: "21/07/30",
+          curGame: "test game name",
+          blur: 4,
+          pd: { horizontal: 3, vertical: 1 },
+          focus: 14,
+        },
+        {
+          date: "21/07/31",
+          curGame: "test game name",
+          blur: 4,
+          pd: { horizontal: 3, vertical: 1 },
+          focus: 19,
+        },
+        {
+          date: "21/08/01",
+          curGame: "test game name",
+          blur: 4,
+          pd: { horizontal: 3, vertical: 1 },
+          focus: 18,
+        },
+        {
+          date: "21/08/02",
+          curGame: "test game name",
+          blur: 4,
+          pd: { horizontal: 3, vertical: 1 },
+          focus: 18,
+        },
+        {
+          date: "21/08/03",
+          curGame: "test game name",
+          blur: 4,
+          pd: { horizontal: 3, vertical: 1 },
+          focus: 22,
+        },
+      ],
+    };
+    this.recentDates = Array.from(data.playLogList, (data) => data.date);
+    this.gameDatas = Array.from(data.playLogList, (data) => data.curGame);
+    this.blurDatas = Array.from(data.playLogList, (data) => data.blur);
+    this.pdDatas = Array.from(data.playLogList, (data) => data.pd);
+    this.focusDatas = Array.from(data.playLogList, (data) => data.focus);
+    this.startIndex = 0;
+    this.endIndex = this.recentDates.length - 1;
+    this.startDay = this.recentDates[this.startIndex];
+    this.endDay = this.recentDates[this.endIndex];
+    this.chartDataUpdate();
   },
 };
 </script>
@@ -154,6 +219,7 @@ export default {
   box-shadow: 0 10px 60px 0 rgba(217, 217, 217, 0.43);
   background-color: #ffffff;
   margin-right: 21px;
+  padding: 30px;
 }
 .focus-chart-in {
   width: 867px;
@@ -161,5 +227,8 @@ export default {
   border-radius: 3px;
   box-shadow: 0 10px 60px 0 rgba(217, 217, 217, 0.43);
   background-color: #ffffff;
+}
+.end-day {
+  margin-top: 30px;
 }
 </style>

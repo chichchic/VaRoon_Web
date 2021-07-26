@@ -73,8 +73,6 @@
 </template>
 <script>
 import VueSlider from "vue-slider-component";
-import { mapActions } from "vuex";
-
 import "vue-slider-component/theme/default.css";
 
 export default {
@@ -112,7 +110,7 @@ export default {
         blurMin: 0,
         horizontalMax: 0,
         horizontalMin: 0,
-        mainEye: "right",
+        mainEye: "leftEye",
         objectMax: 0,
         objectMin: 0,
         verticalMax: 0,
@@ -120,14 +118,19 @@ export default {
       },
     };
   },
-  methods: {
-    ...mapActions(["TRAINING_CHART"]),
-  },
   created() {
-    this.TRAINING_CHART().then((data) => {
-      console.log(data);
-      this.trainingChartData = { ...data };
-    });
+    const data = {
+      blurMax: 3,
+      blurMin: 9,
+      horizontalMax: 9,
+      horizontalMin: 4,
+      mainEye: "leftEye",
+      objectMax: 7,
+      objectMin: 5,
+      verticalMax: 10,
+      verticalMin: -10,
+    };
+    this.trainingChartData = { ...data };
   },
 };
 </script>

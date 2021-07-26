@@ -24,7 +24,6 @@
           :options="chartOptions"
           :series="leftSeries"
         ></VueApexCharts>
-        <div class="click-induce">&uarr;Click this</div>
       </div>
       <div class="range-box">
         <div class="rangebox-id">우안</div>
@@ -36,7 +35,6 @@
           :options="chartOptions"
           :series="rightSeries"
         ></VueApexCharts>
-        <div class="click-induce">&uarr;Click this</div>
       </div>
     </div>
   </article>
@@ -196,15 +194,241 @@ export default {
     },
   },
   mounted() {
-    this.RANGE_CHART()
-      .then((data) => {
-        this.rangeDataArr = data.reverse();
-        this.recentDate = Array.from(data, (data) => data.date);
-        this.selectDateIndex = 0;
-      })
-      .catch((_) => {
-        alert("error");
-      });
+    const data = [
+      {
+        date: "2021/07/26",
+        rightRange: {
+          up: "1",
+          rightUp: "1",
+          right: "1",
+          rightDown: "1",
+          down: "1",
+          leftDown: "1",
+          left: "1",
+          leftUp: "1",
+        },
+        leftRange: {
+          up: "1",
+          rightUp: "1",
+          right: "1",
+          rightDown: "1",
+          down: "1",
+          leftDown: "1",
+          left: "1",
+          leftUp: "1",
+        },
+      },
+      {
+        date: "2021/07/26",
+        rightRange: {
+          up: "2",
+          rightUp: "2",
+          right: "2",
+          rightDown: "2",
+          down: "2",
+          leftDown: "2",
+          left: "2",
+          leftUp: "2",
+        },
+        leftRange: {
+          up: "2",
+          rightUp: "2",
+          right: "2",
+          rightDown: "2",
+          down: "2",
+          leftDown: "2",
+          left: "2",
+          leftUp: "2",
+        },
+      },
+      {
+        date: "2021/07/26",
+        rightRange: {
+          up: "3",
+          rightUp: "3",
+          right: "3",
+          rightDown: "3",
+          down: "3",
+          leftDown: "3",
+          left: "3",
+          leftUp: "3",
+        },
+        leftRange: {
+          up: "3",
+          rightUp: "3",
+          right: "3",
+          rightDown: "3",
+          down: "3",
+          leftDown: "3",
+          left: "3",
+          leftUp: "3",
+        },
+      },
+      {
+        date: "2021/07/26",
+        rightRange: {
+          up: "4",
+          rightUp: "4",
+          right: "4",
+          rightDown: "4",
+          down: "4",
+          leftDown: "4",
+          left: "4",
+          leftUp: "4",
+        },
+        leftRange: {
+          up: "4",
+          rightUp: "4",
+          right: "4",
+          rightDown: "4",
+          down: "4",
+          leftDown: "4",
+          left: "4",
+          leftUp: "4",
+        },
+      },
+      {
+        date: "2021/07/26",
+        rightRange: {
+          up: "5",
+          rightUp: "5",
+          right: "5",
+          rightDown: "5",
+          down: "5",
+          leftDown: "5",
+          left: "5",
+          leftUp: "5",
+        },
+        leftRange: {
+          up: "5",
+          rightUp: "5",
+          right: "5",
+          rightDown: "5",
+          down: "5",
+          leftDown: "5",
+          left: "5",
+          leftUp: "5",
+        },
+      },
+      {
+        date: "2021/07/26",
+        rightRange: {
+          up: "6",
+          rightUp: "6",
+          right: "6",
+          rightDown: "6",
+          down: "6",
+          leftDown: "6",
+          left: "6",
+          leftUp: "6",
+        },
+        leftRange: {
+          up: "6",
+          rightUp: "6",
+          right: "6",
+          rightDown: "6",
+          down: "6",
+          leftDown: "6",
+          left: "6",
+          leftUp: "6",
+        },
+      },
+      {
+        date: "2021/07/26",
+        rightRange: {
+          up: "7",
+          rightUp: "7",
+          right: "7",
+          rightDown: "7",
+          down: "7",
+          leftDown: "7",
+          left: "7",
+          leftUp: "7",
+        },
+        leftRange: {
+          up: "7",
+          rightUp: "7",
+          right: "7",
+          rightDown: "7",
+          down: "7",
+          leftDown: "7",
+          left: "7",
+          leftUp: "7",
+        },
+      },
+      {
+        date: "2021/07/26",
+        rightRange: {
+          up: "8",
+          rightUp: "8",
+          right: "8",
+          rightDown: "8",
+          down: "8",
+          leftDown: "8",
+          left: "8",
+          leftUp: "8",
+        },
+        leftRange: {
+          up: "8",
+          rightUp: "8",
+          right: "8",
+          rightDown: "8",
+          down: "8",
+          leftDown: "8",
+          left: "8",
+          leftUp: "8",
+        },
+      },
+      {
+        date: "2021/07/26",
+        rightRange: {
+          up: "9",
+          rightUp: "9",
+          right: "9",
+          rightDown: "9",
+          down: "9",
+          leftDown: "9",
+          left: "9",
+          leftUp: "9",
+        },
+        leftRange: {
+          up: "9",
+          rightUp: "9",
+          right: "9",
+          rightDown: "9",
+          down: "9",
+          leftDown: "9",
+          left: "9",
+          leftUp: "9",
+        },
+      },
+      {
+        date: "2021/07/26",
+        rightRange: {
+          up: "10",
+          rightUp: "10",
+          right: "10",
+          rightDown: "10",
+          down: "10",
+          leftDown: "10",
+          left: "10",
+          leftUp: "10",
+        },
+        leftRange: {
+          up: "10",
+          rightUp: "10",
+          right: "10",
+          rightDown: "10",
+          down: "10",
+          leftDown: "10",
+          left: "10",
+          leftUp: "10",
+        },
+      },
+    ];
+    this.rangeDataArr = data.reverse();
+    this.recentDate = Array.from(data, (data) => data.date);
+    this.selectDateIndex = 0;
   },
   updated() {},
 };
@@ -236,6 +460,10 @@ export default {
 .range-box {
   height: 613px;
   width: 433.5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .rangebox-id {
   width: 43px;
