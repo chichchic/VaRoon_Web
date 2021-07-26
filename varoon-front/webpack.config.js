@@ -5,7 +5,7 @@ module.exports = {
     entry: './src/main.js',
     output: {
         path: path.resolve(__dirname, './dist'),
-        publicPath: 'http://varoon.s3-website.ap-northeast-2.amazonaws.com/',
+        publicPath: 'http://chichchic.github.io/VaRoon_Web/',
         filename: 'build.js'
     },
     module: {
