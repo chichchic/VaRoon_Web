@@ -26,7 +26,7 @@ const mainHome = (to, from, next) => {
 
 const router = new VueRouter({
     mode: "history",
-
+    base: '/VaRoon_Web/',
     routes: [{
             path: "/main",
             component: Main
