@@ -7,8 +7,8 @@
       <h3 class="about-varoon">About VaRoon</h3>
       <div class="core">
         <div class="introduce">
-          <div class="num">01</div>
-          <div class="name">정확한 측정</div>
+          <p class="num">01</p>
+          <h3 class="name">정확한 측정</h3>
           <img src="@/images/22@2x.png" />
         </div>
         <div class="introduce">
@@ -30,13 +30,13 @@ import MainSlider from "@/components/MainSlider";
 
 export default {
   components: {
-    MainSlider
-  }
+    MainSlider,
+  },
 };
 </script>
 <style>
 .main-bottom {
-  width:100%;
+  width: 100%;
   height: 691px;
   text-align: center;
 }
@@ -60,8 +60,7 @@ export default {
   justify-content: center;
 }
 .core .introduce {
-  width: 357px;
-  height: 458px;
+  width: 30%;
   border-radius: 3px;
   box-shadow: 0 0 10px 0 rgba(217, 217, 217, 0.43);
   background-color: #ffffff;
@@ -73,8 +72,6 @@ export default {
 
 .introduce .num {
   margin-top: 46px;
-  margin-left: 163px;
-  width: 32px;
   height: 32px;
   font-family: NanumBarunGothicUltraLightOTF;
   font-size: 28px;
@@ -99,8 +96,7 @@ export default {
 
 .introduce img {
   margin-top: 39px;
-  width: 357px;
-  height: 297px;
+  width: 100%;
   object-fit: cover;
 }
 </style>

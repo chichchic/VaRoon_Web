@@ -238,15 +238,21 @@ export default {
 <style>
 .pd-chart-header {
   display: flex;
-  width: 1160px;
+  width: 100%;
   justify-content: flex-end;
   margin: 20px auto;
 }
 .pd-chart-in {
   width: 1160px;
-  height: 613px;
   display: flex;
   margin: 0 auto;
+}
+@media screen and (max-width: 1160px) {
+  .pd-chart-in {
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+  }
 }
 .pd-chart-in .category {
   font-family: NanumBarunGothicOTF;
@@ -257,7 +263,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 1160px;
+  width: 100%;
   margin: 0 auto;
   padding: 40px;
   border-radius: 3px;

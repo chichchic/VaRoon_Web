@@ -1,5 +1,9 @@
 <template>
   <article class="login-artice">
+    <p class="test-login-description">
+      아무런 입력값을 입력한 후 로그인 버튼을 누르면<br />
+      상황을 선택할 수 있는 창이 나타납니다.
+    </p>
     <form @submit.prevent="openModal = true">
       <div>
         <h1 class="login-text">로그인</h1>
@@ -135,7 +139,12 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 10rem;
+  padding-top: 5rem;
+}
+.test-login-description {
+  color: rgba(100, 100, 100, 0.5);
+  margin-bottom: 10px;
+  text-align: center;
 }
 .login-text {
   height: 37px;

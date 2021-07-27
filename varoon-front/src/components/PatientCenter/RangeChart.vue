@@ -2,16 +2,17 @@
   <article class="range-chart-component">
     <div class="range-setting" ref="rangeSet">
       <div class="setting-title">측정 날짜</div>
-      <ul class="range-ul" v-for="(date, index) in recentDate" :key="index">
-        <input
-          class="range-radio"
-          type="radio"
-          :value="index"
-          v-model="selectDateIndex"
-        />
-        <div class="range-radio-tag">{{ date }}</div>
+      <ul class="range-ul">
+        <li class="range-li" v-for="(date, index) in recentDate" :key="index">
+          <input
+            class="range-radio"
+            type="radio"
+            :value="index"
+            v-model="selectDateIndex"
+          />
+          <div class="range-radio-tag">{{ date }}</div>
+        </li>
       </ul>
-      <div style="height: 100px"></div>
     </div>
     <div class="range-chart-in">
       <div class="range-box">
@@ -437,22 +438,30 @@ export default {
 .range-chart-component {
   display: flex;
   margin: 30px auto;
-  width: 1162px;
+  width: 100%;
+}
+@media screen and (max-width: 1160px) {
+  .range-chart-component {
+    flex-direction: column;
+    align-items: center;
+  }
 }
 .range-setting {
   width: 274px;
-  height: 613px;
   overflow: scroll;
-  min-height: 613px;
   border-radius: 3px;
   box-shadow: 0 10px 60px 0 rgba(217, 217, 217, 0.43);
   background-color: #ffffff;
-  margin-right: 21px;
+  padding: 20px 10px;
+}
+@media screen and (max-width: 1160px) {
+  .range-setting {
+    width: 867px;
+  }
 }
 .range-chart-in {
   display: flex;
   width: 867px;
-  height: 613px;
   border-radius: 3px;
   box-shadow: 0 10px 60px 0 rgba(217, 217, 217, 0.43);
   background-color: #ffffff;
@@ -473,25 +482,31 @@ export default {
   text-align: left;
   color: #000000;
 }
+@media screen and (max-width: 1160px) {
+  .range-ul {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+.range-li {
+  display: flex;
+  font-size: 24px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+@media screen and (max-width: 1160px) {
+  .range-li {
+    margin-bottom: 0px;
+    margin-right: 10px;
+  }
+}
+.range-li > input {
+  margin-right: 10px;
+}
 .setting-title {
-  height: 20px;
   font-family: NanumBarunGothicOTF;
   font-size: 18px;
   line-height: 2.5;
-  text-align: left;
-  color: #000000;
   margin-bottom: 26px;
-}
-.range-ul {
-  margin-top: 20px;
-  height: 20px;
-  margin-left: 10px;
-}
-.range-radio {
-  height: 20px;
-}
-.range-radio-tag {
-  width: 90px;
-  text-align: right;
 }
 </style>

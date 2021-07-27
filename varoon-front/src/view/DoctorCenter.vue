@@ -261,7 +261,7 @@ export default {
 .doctor-center {
   min-height: calc(100vh - 191px);
   padding: 30px;
-  width: 70%;
+  width: 90%;
   margin: 0 auto;
 }
 .doctor-center-header {
@@ -491,7 +491,7 @@ export default {
 }
 
 .patient-info-text {
-  padding: 40px 52px 0 52px;
+  padding: 40px 52px 10px 52px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   row-gap: 10px;
